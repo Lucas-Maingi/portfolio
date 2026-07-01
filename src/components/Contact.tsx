@@ -8,8 +8,8 @@ export default function Contact() {
     },
     {
       name: "GitHub",
-      value: "github.com/maingilucas0",
-      href: "https://github.com/maingilucas0",
+      value: "github.com/Lucas-Maingi",
+      href: "https://github.com/Lucas-Maingi",
       label: "Review my repositories",
     },
     {

@@ -1,3 +1,5 @@
+import React from "react";
+
 interface Project {
   name: string;
   category: string;
@@ -7,6 +9,7 @@ interface Project {
   metricLabel: string;
   liveUrl?: string;
   githubUrl: string;
+  icon: React.ReactNode;
 }
 
 export default function Projects() {
@@ -19,25 +22,45 @@ export default function Projects() {
       metric: "17+",
       metricLabel: "Data Sources Automated",
       liveUrl: "https://aletheia.software",
-      githubUrl: "https://github.com/maingilucas0/aletheia",
+      githubUrl: "https://github.com/Lucas-Maingi/aletheia.git",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 9h.008v.008H9V9z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 12h.008v.008H12V12z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 15h.008v.008H15V15z" />
+        </svg>
+      )
     },
     {
-      name: "Fraud Detection System",
+      name: "PesaGuard",
       category: "Machine Learning + Data Engineering",
       problem: "Mobile money transactions are vulnerable to instant fraud. This system monitors transactions in real-time, preventing financial loss before transfers settle.",
       tech: ["Python", "XGBoost", "FastAPI"],
       metric: "94%",
       metricLabel: "AUC-ROC Accuracy",
-      githubUrl: "https://github.com/maingilucas0/fraud-detection",
+      liveUrl: "https://pesaguard.streamlit.app/",
+      githubUrl: "https://github.com/Lucas-Maingi/PesaGuard.git",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+        </svg>
+      )
     },
     {
-      name: "Churn Prediction API",
+      name: "Aegis Churn Analytics",
       category: "Machine Learning",
       problem: "High SaaS churn costs businesses revenue. This API predicts which customers are likely to cancel, with SHAP explanation values to guide retention campaigns.",
       tech: ["LightGBM", "SHAP", "scikit-learn"],
       metric: "<200ms",
       metricLabel: "Inference Latency",
-      githubUrl: "https://github.com/maingilucas0/churn-prediction",
+      liveUrl: "https://aegis-churn-analytics.streamlit.app/",
+      githubUrl: "https://github.com/Lucas-Maingi/aegis-churn-analytics.git",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v5.25c0 .621-.504 1.125-1.125 1.125h-2.25A1.125 1.125 0 013 18.375v-5.25zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125v-9.75zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v14.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+        </svg>
+      )
     },
   ];
 
@@ -63,8 +86,9 @@ export default function Projects() {
               className="flex flex-col justify-between p-8 bg-card border border-neutral-800 hover:border-neutral-700 transition-all duration-300 rounded-sm glow-on-hover"
             >
               <div>
-                {/* Category & Badge */}
+                {/* Header Icon & Category */}
                 <div className="flex items-center justify-between mb-6">
+                  {project.icon}
                   <span className="text-[10px] font-semibold font-mono tracking-widest text-accent uppercase bg-accent/5 px-2.5 py-1 rounded-sm border border-accent/10">
                     {project.category}
                   </span>
