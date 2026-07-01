@@ -2,8 +2,8 @@ export default function Contact() {
   const contactMethods = [
     {
       name: "Email",
-      value: "maingilucas0@gmail.com",
-      href: "mailto:maingilucas0@gmail.com",
+      value: "lucasmaingi.tech@gmail.com",
+      href: "mailto:lucasmaingi.tech@gmail.com",
       label: "Send a direct message",
     },
     {
@@ -14,8 +14,8 @@ export default function Contact() {
     },
     {
       name: "LinkedIn",
-      value: "linkedin.com/in/lucasmaingi",
-      href: "https://linkedin.com/in/lucasmaingi",
+      value: "linkedin.com/in/lucas-maingi",
+      href: "https://www.linkedin.com/in/lucas-maingi",
       label: "Connect professionally",
     },
   ];
