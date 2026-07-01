@@ -109,7 +109,7 @@ export default function About() {
 
           <div className="lg:col-span-7">
             <a
-              href="/alx-certificate.png"
+              href="https://intranet.alxswe.com/certificates/hEXFYy3827"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col sm:flex-row items-center gap-6 p-6 bg-card border border-neutral-800 hover:border-neutral-700 transition-all duration-300 rounded-sm glow-on-hover cursor-pointer"
@@ -149,13 +149,13 @@ export default function About() {
                 </h4>
                 
                 <p className="text-xs text-neutral-400 leading-relaxed font-normal">
-                  An intensive 6-month curriculum covering python scripting, data manipulation, statistical modeling, database operations, and machine learning pipelines.
+                  An intensive 13-month professional curriculum covering Python scripting, data manipulation, statistical modeling, database operations, and machine learning pipelines.
                 </p>
 
                 <div className="flex items-center space-x-1 text-[10px] font-mono text-neutral-500 pt-1">
                   <span>ISSUED BY: ALX (AFRICAN LEADERSHIP GROUP)</span>
                   <span>&bull;</span>
-                  <span>CLICK TO VIEW</span>
+                  <span>CLICK TO VERIFY</span>
                 </div>
               </div>
             </a>
