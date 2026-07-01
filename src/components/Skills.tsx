@@ -1,44 +1,142 @@
+"use client";
+
+import React, { useState, useRef } from "react";
+
 interface SkillGroup {
   category: string;
   description: string;
   skills: string[];
 }
 
+function SkillCard({ group }: { group: SkillGroup }) {
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    
+    const mouseX = e.clientX - rect.left - width / 2;
+    const mouseY = e.clientY - rect.top - height / 2;
+    
+    // Smooth 3D tilt
+    const rY = (mouseX / (width / 2)) * 6;
+    const rX = -(mouseY / (height / 2)) * 6;
+
+    setRotate({ x: rX, y: rY });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setRotate({ x: 0, y: 0 });
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(${isHovered ? 1.015 : 1}, ${isHovered ? 1.015 : 1}, 1)`,
+        transition: isHovered 
+          ? "transform 0.05s ease-out, border-color 0.3s ease" 
+          : "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease"
+      }}
+      className="p-8 bg-card border border-neutral-800 hover:border-neutral-700 transition-all duration-300 rounded-sm glow-on-hover preserve-3d reflection-effect cursor-pointer"
+    >
+      <div className="preserve-3d" style={{ transform: "translateZ(20px)" }}>
+        {/* Category Title */}
+        <h3 className="text-base font-bold text-white mb-2 tracking-tight">
+          {group.category}
+        </h3>
+        
+        {/* Category Description */}
+        <p className="text-xs text-neutral-500 mb-6 font-normal leading-relaxed">
+          {group.description}
+        </p>
+
+        {/* Skills Tags */}
+        <div className="flex flex-wrap gap-2">
+          {group.skills.map((skill) => (
+            <span
+              key={skill}
+              className="inline-flex items-center px-2.5 py-1 bg-[#0e0e0e] border border-neutral-900 text-[10px] font-mono text-neutral-300 hover:text-white hover:border-neutral-700 transition-colors duration-200 rounded-sm"
+            >
+              <span className="w-1 h-1 bg-accent/60 rounded-full mr-1.5" />
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Skills() {
   const skillGroups: SkillGroup[] = [
     {
-      category: "Machine Learning & Data Science",
-      description: "Building, evaluating, and deploying analytical models and predictive algorithms.",
+      category: "Machine Learning & AI Engineering",
+      description: "Building predictive models, training deep learning neural nets, and integrating generative AI tools.",
       skills: [
         "Python",
+        "PyTorch",
+        "TensorFlow",
+        "scikit-learn",
         "XGBoost",
         "LightGBM",
-        "SHAP",
-        "scikit-learn",
-        "pandas",
-        "FastAPI",
-        "Streamlit",
+        "SHAP Explainability",
+        "Hugging Face",
+        "LLM Integration",
+        "RAG Pipelines",
+        "Prompt Engineering",
       ],
     },
     {
-      category: "Full Stack Development",
-      description: "Developing robust client-side interfaces and scalable backend server logic.",
+      category: "Data Engineering & Backend",
+      description: "Designing database structures, server logic, data pipelines, and streaming system architectures.",
+      skills: [
+        "SQL",
+        "PostgreSQL",
+        "Supabase",
+        "Redis Caching",
+        "FastAPI",
+        "Flask",
+        "Apache Kafka",
+        "Apache Spark",
+        "ETL Pipelines",
+        "Docker Containerization",
+      ],
+    },
+    {
+      category: "Frontend & Full Stack",
+      description: "Creating responsive, interactive clients and seamless full-stack web applications.",
       skills: [
         "Next.js",
         "React",
         "TypeScript",
+        "JavaScript",
         "Tailwind CSS",
-        "PostgreSQL",
-        "Supabase",
+        "HTML5",
+        "CSS3",
       ],
     },
     {
-      category: "AI & LLM Integration",
-      description: "Structuring pipelines for natural language processing and agentic automation.",
+      category: "Cloud, MLOps & Tools",
+      description: "Deploying production services, setting up automated pipelines, and managing model assets.",
       skills: [
-        "Prompt Engineering",
-        "LLM Integration",
-        "RAG Pipelines",
+        "AWS (S3, EC2)",
+        "Vercel",
+        "CI/CD Pipelines",
+        "MLflow",
+        "Git",
       ],
     },
   ];
@@ -54,39 +152,13 @@ export default function Skills() {
             Technical Skillset
           </h2>
           <p className="text-neutral-400 max-w-xl text-sm font-normal">
-            A focused and honest inventory of the languages, frameworks, and engineering concepts I use to deliver production applications.
+            A comprehensive inventory of languages, frameworks, cloud services, and engineering tools I leverage to build end-to-end intelligent systems.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {skillGroups.map((group) => (
-            <div
-              key={group.category}
-              className="p-8 bg-card border border-neutral-800 hover:border-neutral-700 transition-all duration-300 rounded-sm"
-            >
-              {/* Category Title */}
-              <h3 className="text-base font-bold text-white mb-2 tracking-tight">
-                {group.category}
-              </h3>
-              
-              {/* Category Description */}
-              <p className="text-xs text-neutral-500 mb-6 font-normal leading-relaxed">
-                {group.description}
-              </p>
-
-              {/* Skills Tags */}
-              <div className="flex flex-wrap gap-2.5">
-                {group.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="inline-flex items-center px-3 py-1.5 bg-[#0e0e0e] border border-neutral-900 text-xs font-mono text-neutral-300 hover:text-white hover:border-neutral-700 transition-colors duration-200 rounded-sm"
-                  >
-                    <span className="w-1.5 h-1.5 bg-accent/60 rounded-full mr-2" />
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
+            <SkillCard key={group.category} group={group} />
           ))}
         </div>
       </div>
