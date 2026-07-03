@@ -1,0 +1,133 @@
+export interface CaseStudy {
+  slug: string;
+  name: string;
+  tagline: string;
+  category: string;
+  tech: string[];
+  metric: string;
+  metricLabel: string;
+  liveUrl?: string;
+  githubUrl: string;
+  /** Markdown body rendered on the case-study page. */
+  body: string;
+}
+
+export const caseStudies: CaseStudy[] = [
+  {
+    slug: "pesaguard",
+    name: "PesaGuard",
+    tagline: "Real-time mobile-money fraud detection with explainable alerts.",
+    category: "Machine Learning + Data Engineering",
+    tech: ["Python", "XGBoost", "Isolation Forest", "FastAPI", "Streamlit", "Docker"],
+    metric: "0.89",
+    metricLabel: "PR-AUC on PaySim",
+    liveUrl: "https://github.com/Lucas-Maingi/PesaGuard",
+    githubUrl: "https://github.com/Lucas-Maingi/PesaGuard",
+    body: `
+## The problem
+
+Mobile money (M-Pesa, MTN MoMo, Airtel Money) moves the daily economy across much of Africa — and fraud rides on the same rails. A compromised account is drained with a \`TRANSFER\` to a mule account followed by an immediate agent \`CASH_OUT\`. The window to stop it is seconds, so a fraud system has to score a transaction *before it settles* and hand a human analyst a reason they can act on.
+
+## What I built
+
+PesaGuard is a three-tier system: a **FastAPI** scoring service, a hybrid ML ensemble, and a **Streamlit** analyst console.
+
+- **Hybrid ensemble.** A supervised **XGBoost** classifier (catching known fraud patterns) is blended with an unsupervised **Isolation Forest** (catching novel anomalies): \`score = 0.7 × calibrated_xgb + 0.3 × anomaly\`.
+- **Real-time feature engineering.** Each incoming transaction is enriched with the sender's recent velocity, amount deviation (z-score vs their history), and balance-drain ratio — computed on the fly from the serving database.
+- **Explainability per alert.** Every score ships with its top SHAP drivers translated into plain English ("amount is 100% of balance", "3 transactions in the last hour"), so an analyst isn't staring at a black box.
+
+## The engineering decisions that mattered
+
+**I refused to report the impressive-but-dishonest number.** On the PaySim dataset, tree ensembles hit a near-perfect ROC-AUC of ~1.0. That is a property of a *simulator* with cleanly separable fraud — not evidence of production quality. Reporting it would signal to any experienced reviewer either that I don't recognise data leakage or that I'm inflating. So I led with **PR-AUC (0.89)**, the right metric for a 0.116%-positive class, and wrote a "known limitations" section stating plainly that real-world numbers will be lower.
+
+**False-positive rate is the metric that actually scales.** At 40M transactions/day, a 1% false-positive rate means 400,000 false alerts — an alert queue no team can work. The whole model is tuned to keep FPR near 0.005% while holding high recall, because at mobile-money scale that trade-off *is* the product.
+
+## Making it production-shaped
+
+- **Dockerised** API + dashboard with a lean serving image; \`libgomp1\` installed explicitly for XGBoost's OpenMP runtime.
+- **36-test pytest suite** covering the feature pipeline, ensemble logic, and every API route.
+- **GitHub Actions CI** running lint, tests, and a container smoke test that boots the image and polls \`/health\`.
+- An **analyst feedback endpoint** (\`POST /feedback\`) so labels can flow back for monitored retraining.
+
+## What I'd do next
+
+Load-test the scoring path under concurrency (Locust), move velocity features to a proper feature store sourced from the operator's core ledger, and add automated drift detection to trigger retraining.
+`.trim(),
+  },
+  {
+    slug: "aegis",
+    name: "Aegis Churn Analytics",
+    tagline: "Churn prediction that tells a retention team who to save — and why.",
+    category: "Machine Learning",
+    tech: ["Python", "XGBoost", "SHAP", "FastAPI", "Streamlit", "Docker"],
+    metric: "0.81",
+    metricLabel: "Churn Recall (Telco)",
+    liveUrl: "https://github.com/Lucas-Maingi/aegis-churn-analytics",
+    githubUrl: "https://github.com/Lucas-Maingi/aegis-churn-analytics",
+    body: `
+## The problem
+
+Acquiring a SaaS customer costs far more than keeping one, yet churn is usually noticed *after* the cancel button. A churn model's value isn't its accuracy score — it's handing a retention team a ranked list of at-risk accounts early enough to act, each with a reason attached.
+
+## What I built
+
+Aegis is a **FastAPI** prediction service plus a **Streamlit** dashboard, built around the concerns that separate a notebook from a product.
+
+- **Tuned XGBoost** selected via randomized search + 5-fold CV, benchmarked against LightGBM and logistic-regression baselines, tracked in MLflow.
+- **SHAP explanations** returned with every prediction — the top-3 drivers in plain English so a success manager knows whether to offer a discount, fix a support issue, or push an annual contract.
+- **Product-grade API:** \`X-API-Key\` auth on every route, strict Pydantic validation (bad category or negative tenure → structured \`422\`), sliding-window rate limiting, and non-blocking Supabase logging via background tasks.
+
+## Honest metrics, and why recall is favoured
+
+On the held-out IBM Telco split: **ROC-AUC 0.847, churn-class recall 0.81, precision 0.52.** That precision is a deliberate choice — the cost of a *missed* churner (lost lifetime revenue) dwarfs the cost of a *false alarm* (a retention email to a happy customer), so the threshold is tuned toward recall. ~0.84 AUC is near the practical ceiling widely reported on Telco; I say so rather than dressing it up.
+
+## The bug I'm proudest of catching
+
+While making the serving image lean, I built a fresh environment that happened to pull **pandas 3.0**. Tests passed on my dev machine (pandas 2.3) but the container's \`/predict\` crashed with \`could not convert string to float: 'Yes'\`.
+
+The cause: pandas 3.0 infers string columns as the new \`StringDtype\`, not \`object\`. My binary Yes/No→1/0 encoder was guarded by \`dtype == object\`, so on pandas 3 the mapping silently no-op'd and raw \`'Yes'\` strings flowed straight into XGBoost. I fixed the guard to test for a *non-numeric* dtype (robust across pandas 2 and 3), fixed the same footgun in the data loader, pinned pandas for reproducible serving, and verified the full suite on **both pandas 2.3.3 and 3.0.3**. I also decoupled the serving path from training-only dependencies (mlflow, lightgbm) that were being imported transitively and bloating/breaking the image.
+
+That's the kind of failure that never shows up in a notebook and always shows up in production — and it's exactly why I test against the environment I deploy to.
+
+## Making it production-shaped
+
+Dockerised serving image, GitHub Actions CI (lint + coverage + container health smoke test), and an explicit "known limitations" section covering dataset drift, in-process rate limiting, and per-request SHAP cost.
+`.trim(),
+  },
+  {
+    slug: "aletheia",
+    name: "Aletheia",
+    tagline: "Agentic, defensive OSINT — know your own exposure before an attacker does.",
+    category: "Full Stack + AI Engineering",
+    tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "LLMs"],
+    liveUrl: "https://www.aletheia.software",
+    githubUrl: "https://github.com/Lucas-Maingi/Aletheia",
+    metric: "17+",
+    metricLabel: "Sources Correlated",
+    body: `
+## The problem
+
+Security and risk teams keep asking questions that are slow to research by hand: *What of ours is already exposed in a breach? Is someone impersonating our brand? Who exactly are we about to do business with?* The raw data is public — it's the collection, correlation, and synthesis that eats hours.
+
+## What I built
+
+Aletheia is a **Next.js + TypeScript** application (PostgreSQL via Prisma) that runs OSINT investigations as **automated agentic workflows** across pluggable connectors, then uses an LLM to synthesise the raw findings into a structured, cited report.
+
+- **Modular connector engine.** Each source is an isolated, typed connector returning a normalised result and registered in a central registry, so an investigation fans out across sources in parallel. Connectors favour free, key-optional public APIs — breach intelligence, infrastructure/attack-surface, sanctions screening, historical (Wayback) footprint, knowledge-graph enrichment.
+- **Case management.** Investigations persist as cases, so findings can be reviewed, shared, and re-run over time.
+- **LLM synthesis.** Instead of dumping raw hits, an LLM correlates them into a readable narrative with citations back to each source.
+
+## A deliberate repositioning
+
+Aletheia started life framed around person-tracking — the kind of capability that reads as surveillance. I rewrote its positioning around **authorized, defensive use**: attack-surface discovery, breach-exposure monitoring, brand-abuse detection, and consent-based due diligence, with an explicit *Responsible Use* policy. Same engine, legitimate market, and none of the legal or hiring-optics liability. It's a reminder that framing and ethics are part of the engineering, not an afterthought.
+
+## Status
+
+Aletheia is the most ambitious of my projects and remains in active development — the connector engine and case management are working, with the synthesis and reporting layers being expanded.
+`.trim(),
+  },
+];
+
+export function getCaseStudy(slug: string): CaseStudy | undefined {
+  return caseStudies.find((c) => c.slug === slug);
+}

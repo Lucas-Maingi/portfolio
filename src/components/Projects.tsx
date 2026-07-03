@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import Link from "next/link";
 
 interface Project {
   name: string;
+  slug: string;
   category: string;
   problem: string;
   tech: string[];
@@ -101,6 +103,15 @@ function ProjectCard({ project }: { project: Project }) {
           </div>
         </div>
 
+        {/* Case study link */}
+        <Link
+          href={`/projects/${project.slug}`}
+          className="mb-4 inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-accent transition-colors hover:text-white"
+        >
+          Read case study
+          <span aria-hidden>→</span>
+        </Link>
+
         {/* CTA Buttons */}
         <div className="grid grid-cols-2 gap-3">
           {project.liveUrl ? (
@@ -138,6 +149,7 @@ export default function Projects() {
   const projects: Project[] = [
     {
       name: "Aletheia",
+      slug: "aletheia",
       category: "Full Stack + AI Engineering",
       problem: "Security teams struggle to see their own public exposure. Aletheia runs authorized OSINT workflows across pluggable connectors — breach checks, attack-surface, sanctions — then uses an LLM to synthesize findings into a cited report in seconds.",
       tech: ["Next.js", "TypeScript", "Prisma", "LLMs"],
@@ -156,6 +168,7 @@ export default function Projects() {
     },
     {
       name: "PesaGuard",
+      slug: "pesaguard",
       category: "Machine Learning + Data Engineering",
       problem: "Mobile money transactions are vulnerable to instant fraud. This hybrid XGBoost + Isolation Forest engine scores each transaction in real-time with SHAP explanations, flagging theft before cash-out settles.",
       tech: ["Python", "XGBoost", "FastAPI", "Docker"],
@@ -171,6 +184,7 @@ export default function Projects() {
     },
     {
       name: "Aegis Churn Analytics",
+      slug: "aegis",
       category: "Machine Learning",
       problem: "High SaaS churn silently drains revenue. This authenticated FastAPI service predicts which customers will cancel and returns SHAP-based, plain-English reasons so retention teams know exactly who to save and why.",
       tech: ["XGBoost", "SHAP", "FastAPI", "Docker"],
