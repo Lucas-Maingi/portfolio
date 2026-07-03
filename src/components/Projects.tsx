@@ -139,12 +139,12 @@ export default function Projects() {
     {
       name: "Aletheia",
       category: "Full Stack + AI Engineering",
-      problem: "OSINT and threat intelligence is manually intensive and slow. Aletheia automates tracking of open-source threats, reducing intelligence analysis times from hours to seconds.",
-      tech: ["Next.js", "Python", "LLMs"],
+      problem: "Security teams struggle to see their own public exposure. Aletheia runs authorized OSINT workflows across pluggable connectors — breach checks, attack-surface, sanctions — then uses an LLM to synthesize findings into a cited report in seconds.",
+      tech: ["Next.js", "TypeScript", "Prisma", "LLMs"],
       metric: "17+",
-      metricLabel: "Data Sources Automated",
-      liveUrl: "https://aletheia.software",
-      githubUrl: "https://github.com/Lucas-Maingi/aletheia.git",
+      metricLabel: "Sources Correlated",
+      liveUrl: "https://www.aletheia.software",
+      githubUrl: "https://github.com/Lucas-Maingi/Aletheia",
       icon: (
         <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -157,12 +157,12 @@ export default function Projects() {
     {
       name: "PesaGuard",
       category: "Machine Learning + Data Engineering",
-      problem: "Mobile money transactions are vulnerable to instant fraud. This system monitors transactions in real-time, preventing financial loss before transfers settle.",
-      tech: ["Python", "XGBoost", "FastAPI"],
-      metric: "94%",
-      metricLabel: "AUC-ROC Accuracy",
+      problem: "Mobile money transactions are vulnerable to instant fraud. This hybrid XGBoost + Isolation Forest engine scores each transaction in real-time with SHAP explanations, flagging theft before cash-out settles.",
+      tech: ["Python", "XGBoost", "FastAPI", "Docker"],
+      metric: "0.89",
+      metricLabel: "PR-AUC on PaySim",
       liveUrl: "https://pesaguard.streamlit.app/",
-      githubUrl: "https://github.com/Lucas-Maingi/PesaGuard.git",
+      githubUrl: "https://github.com/Lucas-Maingi/PesaGuard",
       icon: (
         <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
@@ -172,12 +172,12 @@ export default function Projects() {
     {
       name: "Aegis Churn Analytics",
       category: "Machine Learning",
-      problem: "High SaaS churn costs businesses revenue. This API predicts which customers are likely to cancel, with SHAP explanation values to guide retention campaigns.",
-      tech: ["LightGBM", "SHAP", "scikit-learn"],
-      metric: "<200ms",
-      metricLabel: "Inference Latency",
+      problem: "High SaaS churn silently drains revenue. This authenticated FastAPI service predicts which customers will cancel and returns SHAP-based, plain-English reasons so retention teams know exactly who to save and why.",
+      tech: ["XGBoost", "SHAP", "FastAPI", "Docker"],
+      metric: "0.81",
+      metricLabel: "Churn Recall (Telco)",
       liveUrl: "https://aegis-churn-analytics.streamlit.app/",
-      githubUrl: "https://github.com/Lucas-Maingi/aegis-churn-analytics.git",
+      githubUrl: "https://github.com/Lucas-Maingi/aegis-churn-analytics",
       icon: (
         <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v5.25c0 .621-.504 1.125-1.125 1.125h-2.25A1.125 1.125 0 013 18.375v-5.25zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125v-9.75zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v14.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
