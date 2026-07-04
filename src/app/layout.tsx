@@ -9,14 +9,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Lucas Maingi | ML Engineer & Full Stack Developer",
+  title: "Lucas Maingi | AI Engineer — Agentic Systems & LLM Applications",
   description:
-    "Portfolio of Lucas Maingi, an ML Engineer and Full Stack Developer specializing in high-performance intelligent applications, real-time data pipelines, and robust web solutions.",
+    "Portfolio of Lucas Maingi, an AI Engineer building production-shaped agents, LLM tooling, and machine learning systems: WhatsApp commerce agents with real M-Pesa payments, an LLM eval/regression-gate toolkit, a drop-in LLM security gateway, and more.",
   robots: "index, follow",
   openGraph: {
-    title: "Lucas Maingi | ML Engineer & Full Stack Developer",
+    title: "Lucas Maingi | AI Engineer — Agentic Systems & LLM Applications",
     description:
-      "ML Engineer & Full Stack Developer portfolio showcasing real-world threat intelligence, real-time fraud detection, and SaaS churn prediction applications.",
+      "AI Engineer portfolio showcasing agentic AI systems, LLM evaluation tooling, fraud detection, LLM security, and real-world fintech/automation integrations.",
     type: "website",
     locale: "en_US",
   },

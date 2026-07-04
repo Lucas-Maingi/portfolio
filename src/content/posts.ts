@@ -136,6 +136,83 @@ It reframes every shortcut from a *hidden weakness a reviewer might catch* into 
 Confidence isn't claiming your work is production-ready. It's being precise about exactly how far from production it is, and what the road there looks like.
 `.trim(),
   },
+  {
+    slug: "why-my-whatsapp-agent-never-invents-a-price",
+    title: "Why my WhatsApp AI agent never invents a price",
+    date: "2026-07-04",
+    readingTime: "4 min read",
+    excerpt:
+      "Building Hermes, a WhatsApp commerce agent with real M-Pesa payments, the hardest design decision wasn't the LLM — it was deciding what the agent is never allowed to say.",
+    body: `
+Hermes is a WhatsApp AI agent that answers questions, takes orders, and collects M-Pesa payment for small businesses. The tempting version of this project lets the LLM answer anything conversationally. I built the opposite.
+
+## The rule
+
+Every factual claim the agent makes — a price, a stock level, store hours, a delivery policy — is retrieved from the business's own catalog and info, never generated. If the catalog doesn't cover a question, the agent says so and hands off to a human. It is not allowed to sound confident about something it doesn't actually know.
+
+## Why this matters more than the LLM choice
+
+A shop's WhatsApp line is the storefront. If the agent invents a price and a customer holds them to it, that's real money lost, not an amusing chatbot glitch. The failure mode of "grounded system that sometimes says 'let me check'" is annoying. The failure mode of "fluent system that confidently hallucinates a price" is a business liability. I designed for the first failure mode on purpose.
+
+## How it's enforced architecturally, not just prompted
+
+Prompting a model to "only use real data" is advice, not a guarantee — it can still hallucinate under pressure. So Hermes's \`lookup_knowledge\` and \`capture_order\` tools are the *only* path to a fact reaching the customer, and they're backed by a plain lookup against the business's \`Product\`/info records. If the lookup misses, the tool itself returns "I'm not sure — let me get someone from the team," and flags the conversation for human handoff. The LLM narrates; it doesn't invent.
+
+## The same pattern shows up everywhere I build agents
+
+This is the same principle behind the human-approval gates in my AIOps and job-search agents: the LLM proposes, but the system — not the model's confidence — decides what's allowed to become a real-world action. Grounding facts and gating actions are two versions of the same idea: an agent's freedom should end exactly where a real cost begins.
+`.trim(),
+  },
+  {
+    slug: "copilot-not-autopilot",
+    title: "Copilot, not autopilot: the safety-gate pattern for AI agents",
+    date: "2026-07-04",
+    readingTime: "4 min read",
+    excerpt:
+      "Two of my agent projects — an AI ops responder and a job-application assistant — could both technically act with zero human involvement. I built neither one that way, and here's the pattern I used instead.",
+    body: `
+SentryBrain diagnoses server incidents and can propose the exact command to fix them. JobSentry can find a job listing, score it, draft a cover letter, and drive a browser to submit the application. Both could be built to act completely autonomously. I didn't build either one that way, and it wasn't a technical limitation — it was the correct call.
+
+## Autonomy is not free
+
+Auto-remediating a production incident with no human in the loop means one wrong diagnosis turns one outage into two — and the second one is self-inflicted. Auto-submitting job applications at scale means low-quality, untailored submissions going out faster than a human could ever review them, which damages the applicant's reputation with every recruiter who notices the pattern. In both cases, full autonomy doesn't just risk failure — it risks doing real, compounding damage *faster*.
+
+## The three-layer pattern I use
+
+Across both projects the same shape recurs:
+
+1. **Autonomous where it's safe.** Read-only diagnostics, search, scoring, and drafting all run without asking — nothing here can hurt anything.
+2. **A hard stop before anything irreversible.** Restarting a service, running a remediation script, or submitting a form to a real employer all require an explicit human approval step. No exceptions.
+3. **Verification after the fact.** SentryBrain checks that a "fix" actually resolved the incident before closing it; JobSentry's board tracks real recruiter replies rather than assuming a submitted application is a success.
+
+## Why I'd rather ship this than a flashier demo
+
+A fully autonomous agent is a better demo. A gated one is a better *product* — because the gate is what makes it trustworthy enough for someone to actually turn on in their business, on their servers, with their job search. Anyone can build the exciting version. The judgment is in knowing where to put the brake pedal.
+`.trim(),
+  },
+  {
+    slug: "what-building-an-llm-firewall-taught-me",
+    title: "What building an LLM security gateway taught me about prompt injection",
+    date: "2026-07-04",
+    readingTime: "3 min read",
+    excerpt:
+      "Reading about prompt injection and PII leakage is one thing. Building a proxy that has to actually catch it in real traffic is another — here's what changed my mind.",
+    body: `
+Aegis Shield is a drop-in proxy that sits between an application and an LLM provider, scanning requests going up and responses coming back down for PII leaks, prompt injection, and secret exposure. Building the scanners taught me more than reading about the threat model ever did.
+
+## PII detection is not "just regex"
+
+A regex that matches 16 digits catches every card-shaped number, including ones that aren't real cards. Aegis Shield's card detector runs a **Luhn checksum** on top of the pattern match — the same validation a real payment processor uses — because a naive regex alone produces enough false positives to make the tool annoying rather than useful. The lesson: a detector that "sort of works" on a demo input and one that holds up on real traffic are different amounts of engineering, not the same thing with a different regex.
+
+## Prompt injection isn't one signature, it's a spectrum
+
+Keyword matching ("ignore previous instructions") catches the laziest attempts and nothing else. A meaningfully harder injection doesn't use any flagged phrase at all — it just doesn't *look* like the rest of the conversation. That's why Aegis Shield pairs keyword matching with an entropy-based signal: text that's anomalously structured relative to normal input is itself a signal, independent of what words it uses. Neither signal alone is enough; together they catch more of the spectrum.
+
+## The real lesson: a guardrail is judged on its false-positive rate, not just its catch rate
+
+A filter that blocks 100% of attacks and 30% of legitimate requests will be disabled by week two. Every scanner in Aegis Shield was tuned with as much attention to *what it should let through* as to what it should catch — because a security layer nobody keeps turned on isn't a security layer.
+`.trim(),
+  },
 ];
 
 export function getPost(slug: string): Post | undefined {
