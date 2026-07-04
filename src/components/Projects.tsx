@@ -231,6 +231,54 @@ export default function Projects() {
         </svg>
       )
     },
+    {
+      name: "JobSentry",
+      slug: "job-sentry",
+      category: "AI Agents / Automation",
+      problem: "Job hunting is a repetitive pipeline. JobSentry discovers roles, scores them against your resume, drafts tailored cover letters, and pre-fills applications with Playwright — stopping for human review before anything is sent. A copilot, deliberately not a mass-applier.",
+      tech: ["Python", "FastAPI", "Playwright", "Streamlit", "IMAP"],
+      metric: "Search→Apply",
+      metricLabel: "Human-in-the-loop",
+      liveUrl: "https://github.com/Lucas-Maingi/job-sentry",
+      githubUrl: "https://github.com/Lucas-Maingi/job-sentry",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h.001a.75.75 0 00.75-.75c0-.231-.035-.454-.1-.664M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+        </svg>
+      )
+    },
+    {
+      name: "SentryBrain",
+      slug: "sentry-brain",
+      category: "AI Agents / DevOps",
+      problem: "On-call is exhausting because the same incidents recur. SentryBrain streams server telemetry, uses an LLM to diagnose root causes and propose fixes, and gates every destructive command behind human approval — then verifies its own work before closing the incident.",
+      tech: ["Python", "FastAPI", "psutil", "SQLite", "LLM"],
+      metric: "Detect→Fix",
+      metricLabel: "With human approval",
+      liveUrl: "https://github.com/Lucas-Maingi/sentry-brain",
+      githubUrl: "https://github.com/Lucas-Maingi/sentry-brain",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" />
+        </svg>
+      )
+    },
+    {
+      name: "Aegis Shield",
+      slug: "aegis-shield",
+      category: "LLM Security / Infrastructure",
+      problem: "Every LLM feature has an unguarded seam: raw input goes up, raw output comes down. Aegis Shield is a drop-in proxy that scans both directions for PII leaks, prompt injections, and secret exposure — OpenAI-compatible, one base_url override, with caching and rate limiting.",
+      tech: ["Python", "FastAPI", "SQLite", "Streamlit", "Docker"],
+      metric: "1-line",
+      metricLabel: "Drop-in LLM firewall",
+      liveUrl: "https://github.com/Lucas-Maingi/aegis-shield",
+      githubUrl: "https://github.com/Lucas-Maingi/aegis-shield",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+      )
+    },
   ];
 
   return (

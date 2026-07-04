@@ -207,6 +207,90 @@ Aletheia started life framed around person-tracking — the kind of capability t
 Aletheia is the most ambitious of my projects and remains in active development — the connector engine and case management are working, with the synthesis and reporting layers being expanded.
 `.trim(),
   },
+  {
+    slug: "job-sentry",
+    name: "JobSentry",
+    tagline: "A semi-autonomous AI copilot for the job search — with a human in the loop.",
+    category: "AI Agents / Automation",
+    tech: ["Python", "FastAPI", "Playwright", "Streamlit", "IMAP", "Docker"],
+    liveUrl: "https://github.com/Lucas-Maingi/job-sentry",
+    githubUrl: "https://github.com/Lucas-Maingi/job-sentry",
+    metric: "Search → Apply",
+    metricLabel: "Human-in-the-loop",
+    body: `
+## The problem
+
+Job hunting is a repetitive pipeline: search listings, judge relevance, tailor a cover letter, fill the same fields into yet another form, then track who replied. It's hours of low-value work that's easy to do badly and hard to do consistently.
+
+## What I built
+
+JobSentry automates the pipeline while keeping a human in control. It discovers roles via search APIs, **scores each against your resume** (flagging weak matches below a threshold), drafts a tailored cover letter and application answers, and presents everything on a **Streamlit Kanban board for review before anything is sent**. On approval, Playwright fills the application form; IMAP monitoring then watches for recruiter replies and moves cards to Interview / Rejected / Offer automatically.
+
+## The design decision that matters: safety over full autonomy
+
+The tempting version of this tool auto-submits hundreds of applications. That's exactly what I *didn't* build. Fully-automated mass-applying produces low-quality submissions, trips bot detection, and can violate site terms — it hurts more than it helps. JobSentry is deliberately a **copilot**: it does the tedious 90% (find, score, draft, pre-fill) and stops at the point where human judgment matters (final review and submit). The README documents these "safety protocol layers" as a first-class design choice, not an afterthought.
+
+## Engineering
+
+A FastAPI backend orchestrates search and drafting; a Streamlit board is the human-review surface; Playwright handles browser automation; IMAP closes the loop on responses. Containerized with Docker Compose, with a pytest suite and green CI.
+`.trim(),
+  },
+  {
+    slug: "sentry-brain",
+    name: "SentryBrain",
+    tagline: "AIOps: LLM-driven server monitoring and auto-remediation, gated by human approval.",
+    category: "AI Agents / DevOps",
+    tech: ["Python", "FastAPI", "psutil", "SQLite", "LLM diagnosis", "Docker"],
+    liveUrl: "https://github.com/Lucas-Maingi/sentry-brain",
+    githubUrl: "https://github.com/Lucas-Maingi/sentry-brain",
+    metric: "Detect → Fix",
+    metricLabel: "With human approval",
+    body: `
+## The problem
+
+On-call is exhausting because the same incidents recur: a process OOMs, a disk fills, a service dies. Diagnosing and fixing them is often mechanical — but doing it at 3am, correctly, under pressure, is not.
+
+## What I built
+
+SentryBrain is a three-tier AIOps system. A lightweight **Sentry Agent** runs on target hosts, streaming metrics (CPU, RAM, disk) and logs. A FastAPI **Central Brain** ingests the telemetry, detects anomalies, and uses an LLM to diagnose the root cause and propose a fix. A Streamlit dashboard (plus Discord alerts) puts an operator in control. The loop is: monitor → diagnose → alert → **approve** → execute → verify.
+
+## The safety model is the product
+
+Auto-remediation that runs destructive commands unsupervised is a great way to turn one outage into two. So SentryBrain enforces three escalating layers: **diagnostic** (read-only) commands run automatically; **remediation** (destructive) commands require explicit human approval; and every fix is **objectively verified** afterward before the incident is closed. The LLM proposes; a human disposes; the system checks its own work.
+
+## Engineering
+
+FastAPI ingestion + diagnosis, SQLite incident store, a Streamlit control plane, and Discord notifications, all containerized. pytest suite and green CI. It demonstrates the pattern enterprises actually want from "agentic ops": autonomy for the safe parts, hard gates on the dangerous ones.
+`.trim(),
+  },
+  {
+    slug: "aegis-shield",
+    name: "Aegis Shield",
+    tagline: "A drop-in security gateway that sits between your app and any LLM provider.",
+    category: "LLM Security / Infrastructure",
+    tech: ["Python", "FastAPI", "SQLite", "Streamlit", "Docker"],
+    liveUrl: "https://github.com/Lucas-Maingi/aegis-shield",
+    githubUrl: "https://github.com/Lucas-Maingi/aegis-shield",
+    metric: "1-line",
+    metricLabel: "Drop-in LLM firewall",
+    body: `
+## The problem
+
+Every company shipping an LLM feature has the same unguarded seam: raw user input goes up to a provider, and raw model output comes back down. That's where PII leaks out, prompt injections sneak in, and API keys or infrastructure details escape in responses — usually with no inspection at all.
+
+## What I built
+
+Aegis Shield is a **proxy that sits between your application and the LLM provider** (OpenAI, Anthropic, others) and scans traffic both directions. Inbound: PII detection (emails, SSNs, card numbers with Luhn validation) and multi-signal prompt-injection detection (keyword + entropy). Outbound: filters for API-key and infrastructure leakage. It's a **drop-in** — you override one \`base_url\` and it's in the path, OpenAI-API-compatible. Exact-match response caching gives sub-10ms returns on repeats, and per-key token-bucket rate limiting protects spend. A Streamlit dashboard shows real-time security analytics.
+
+## Why it matters
+
+LLM security / guardrails is one of the fastest-growing concerns in production AI, and most teams have nothing at this layer. Aegis Shield is the kind of infrastructure component that's immediately legible to a security-conscious engineering team: a clear threat model, concrete allowed/blocked examples, and a deployment story that's one config line.
+
+## Engineering
+
+A FastAPI proxy with layered scanners, SQLite audit + cache store, Docker Compose deployment, a pytest suite, and green CI. Built to be understood and trusted, which for a security tool is the whole point.
+`.trim(),
+  },
 ];
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
