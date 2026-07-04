@@ -83,8 +83,21 @@ function SkillCard({ group }: { group: SkillGroup }) {
 export default function Skills() {
   const skillGroups: SkillGroup[] = [
     {
-      category: "Machine Learning & AI Engineering",
-      description: "Building predictive models, training deep learning neural nets, and integrating generative AI tools.",
+      category: "AI Agents & LLM Engineering",
+      description: "Building tool-calling agents, evaluation/regression-gate tooling, and LLM security guardrails — provider-agnostic and production-shaped.",
+      skills: [
+        "Agent Orchestration & Tool Use",
+        "LLM Evaluation & Regression Gates",
+        "Prompt Injection & PII Defense",
+        "Provider-Agnostic LLM Adapters",
+        "RAG & Grounded Retrieval",
+        "Prompt Engineering",
+        "Hugging Face",
+      ],
+    },
+    {
+      category: "Machine Learning",
+      description: "Building predictive models, training deep learning neural nets, and explaining their decisions.",
       skills: [
         "Python",
         "PyTorch",
@@ -93,15 +106,11 @@ export default function Skills() {
         "XGBoost",
         "LightGBM",
         "SHAP Explainability",
-        "Hugging Face",
-        "LLM Integration",
-        "RAG Pipelines",
-        "Prompt Engineering",
       ],
     },
     {
       category: "Data Engineering & Backend",
-      description: "Designing database structures, server logic, data pipelines, and streaming system architectures.",
+      description: "Designing database structures, server logic, data pipelines, and real-world integrations (payments, messaging).",
       skills: [
         "SQL",
         "PostgreSQL",
@@ -109,8 +118,9 @@ export default function Skills() {
         "Redis Caching",
         "FastAPI",
         "Flask",
+        "M-Pesa Daraja API",
+        "WhatsApp Cloud API",
         "Apache Kafka",
-        "Apache Spark",
         "ETL Pipelines",
         "Docker Containerization",
       ],

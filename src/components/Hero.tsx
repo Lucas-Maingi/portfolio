@@ -48,15 +48,15 @@ export default function Hero() {
               Lucas Maingi
             </span>
             <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">
-              ML Engineer &
+              AI Engineer &
             </span>
             <span className="block text-white">
-              Full Stack Developer
+              Agentic Systems Builder
             </span>
           </h1>
 
           <p className="text-base sm:text-lg text-neutral-400 max-w-xl font-normal leading-relaxed">
-            I build production-grade machine learning models and design the scalable full-stack applications that integrate them. Focused on bridging the gap between intelligent algorithms and reliable software systems.
+            I design and ship production-shaped AI agents, LLM tooling, and machine learning systems — from a WhatsApp commerce agent with real M-Pesa payments to an LLM eval/regression-gate toolkit and a drop-in LLM security gateway. Eight shipped systems, real integrations, honest metrics.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">
