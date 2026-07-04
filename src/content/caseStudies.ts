@@ -14,6 +14,49 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "argus",
+    name: "Argus",
+    tagline: "Eval, tracing & regression-gate toolkit for LLM applications.",
+    category: "AI Tooling / Open Source",
+    tech: ["Python", "Click", "SQLite", "Streamlit", "GitHub Actions", "Docker"],
+    liveUrl: "https://huggingface.co/spaces/lucas-maingi/argus-eval",
+    githubUrl: "https://github.com/Lucas-Maingi/argus",
+    metric: "CI-gated",
+    metricLabel: "Quality Regressions",
+    body: `
+## The problem
+
+Every team shipping an LLM feature eventually hits the same wall: *did this prompt or model change make things better or worse?* A demo that looks good once tells you nothing about whether your last edit quietly broke a case you weren't watching. The 2026 hiring signal is loud on this - teams building AI products are bottlenecked on **evaluation and observability**, not on prompting. Argus is my answer.
+
+## What I built
+
+Argus is a small, self-hostable toolkit that does three things, usable together or independently:
+
+- **Eval suites** - test cases defined in YAML, scored with pluggable scorers (exact match, substring with partial credit, regex, or an LLM-as-judge), run against *any* Python callable.
+- **A regression gate** - compares a run against a stored baseline and exits non-zero if quality drops beyond a tolerance you set, reporting exactly which cases newly regressed. This is the piece that turns "we ran some evals" into a CI check.
+- **Tracing** - a \`@traced\` decorator recording latency, input/output, and optional token/cost, persisted to SQLite and browsable in a Streamlit dashboard.
+
+Deliberately **zero dependency on any provider SDK** - Argus scores and traces any callable that takes a string and returns a string, so it works the same whether that's Claude, OpenAI, a local model, or a mock.
+
+## The part I'm proudest of: the CI dogfoods itself
+
+The GitHub Actions pipeline doesn't just run unit tests - it runs Argus against its own example suite, saves a baseline, then runs a **deliberately regressed** version and asserts the gate catches it. The shell logic is inverted so that the gate *working correctly* is what keeps CI green. The badge isn't proof the code compiles; it's proof the core promise - "this will catch a real quality regression" - actually holds on every push.
+
+## Built like production tooling, found real bugs like it
+
+48 tests (no network or API keys required), ruff-linted, Dockerised with a health-checked image, and shipped as a proper \`pip\`-installable package with a console entry point. Pushing it commit-by-commit through CI surfaced exactly the class of bug that only appears outside a notebook:
+
+- The installed \`argus\` command couldn't import a user's own \`--target\` module because the console-script entry point (unlike \`python -m\`) doesn't put the working directory on \`sys.path\` - a genuine usability bug real users would hit right after \`pip install\`.
+- The CLI crashed on Windows' legacy cp1252 console because I'd used Unicode symbols in output - so all terminal output is now plain ASCII.
+
+Each was fixed in its own commit with failing-then-passing CI - the honest trail of iterative development, not one polished drop.
+
+## What I'd do next
+
+Add async/batched eval runs for large suites, a Postgres store option for team use, and first-class adapters for the common provider SDKs so the "wrap your callable" step is optional.
+`.trim(),
+  },
+  {
     slug: "pesaguard",
     name: "PesaGuard",
     tagline: "Real-time mobile-money fraud detection with explainable alerts.",
