@@ -57,6 +57,44 @@ Add async/batched eval runs for large suites, a Postgres store option for team u
 `.trim(),
   },
   {
+    slug: "hermes",
+    name: "Hermes",
+    tagline: "A WhatsApp AI commerce agent for African SMEs, with real M-Pesa payment collection.",
+    category: "AI Agents / Fintech",
+    tech: ["Python", "FastAPI", "M-Pesa Daraja", "WhatsApp Cloud API", "LLM tools", "Docker"],
+    liveUrl: "https://github.com/Lucas-Maingi/hermes",
+    githubUrl: "https://github.com/Lucas-Maingi/hermes",
+    metric: "Order → Pay → Confirm",
+    metricLabel: "End-to-end, no human",
+    body: `
+## The problem
+
+In Kenya and much of Africa, **WhatsApp is the storefront and M-Pesa is the checkout.** A shop owner spends hours a day answering the same questions ("do you have X? how much? where are you?"), taking orders by hand, and chasing payments - and loses sales entirely after hours. Existing chatbots are Western, don't speak Swahili/Sheng naturally, and don't touch M-Pesa.
+
+## What I built
+
+Hermes is an AI agent that runs a business's WhatsApp line end to end. In one bilingual conversation it answers FAQs grounded in the shop's own catalog (so it never invents a price), builds an order conversationally, triggers an **M-Pesa STK-push** for payment, confirms when paid, and hands off to a human the moment it's unsure. The owner gets a dashboard showing deflection rate and revenue collected - value stated in shillings.
+
+## Why it's a real product, not a demo
+
+This was the bar I held myself to. The integrations are the *real* ones:
+
+- The actual **Meta WhatsApp Cloud API** - webhook verification handshake, inbound-message parsing, and outbound sending via the Graph API.
+- The actual **M-Pesa Daraja** flow - OAuth token, STK-push \`processrequest\`, status query, and callback parsing, against sandbox or production.
+- A **provider-agnostic LLM** layer running on Groq's free tier or OpenAI by config.
+
+A business supplies their credentials and Hermes serves real customers over their real WhatsApp line and collects real money. Faithful simulators for M-Pesa and the LLM sit behind the same interfaces, so the entire flow is testable and demoable with zero accounts - which is exactly how the 83-test suite and the live demo run.
+
+## Engineering
+
+Built milestone by milestone (8 milestones, each its own commit + CI run): domain models, a tool-calling agent orchestrator, five grounded tools (knowledge, order capture, STK push, payment check, human handoff), a multi-tenant catalog, SQLite persistence with deflection/revenue metrics, a FastAPI surface (\`/webhook\`, \`/mpesa/callback\`, \`/chat\`), and a Streamlit chat-simulator + owner dashboard. It understands English and Swahili/Sheng because the market does. CI runs lint + 83 tests + a Docker build/boot on every push.
+
+## What's left to go live
+
+Deliberately, only the business realities I can't write in code: M-Pesa production credentials (a registered business + Safaricom Go-Live), a verified WhatsApp number, and always-on hosting. The README states this line explicitly.
+`.trim(),
+  },
+  {
     slug: "pesaguard",
     name: "PesaGuard",
     tagline: "Real-time mobile-money fraud detection with explainable alerts.",
