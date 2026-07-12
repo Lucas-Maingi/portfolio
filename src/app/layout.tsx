@@ -9,6 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://lucasmaingi.vercel.app"),
   title: "Lucas Maingi | AI Engineer — Agentic Systems & LLM Applications",
   description:
     "Portfolio of Lucas Maingi, an AI Engineer building production-shaped agents, LLM tooling, and machine learning systems: WhatsApp commerce agents with real M-Pesa payments, an LLM eval/regression-gate toolkit, a drop-in LLM security gateway, and more.",
@@ -19,6 +20,14 @@ export const metadata: Metadata = {
       "AI Engineer portfolio showcasing agentic AI systems, LLM evaluation tooling, fraud detection, LLM security, and real-world fintech/automation integrations.",
     type: "website",
     locale: "en_US",
+    url: "https://lucasmaingi.vercel.app",
+    siteName: "Lucas Maingi",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lucas Maingi | AI Engineer — Agentic Systems & LLM Applications",
+    description:
+      "AI Engineer building agentic systems, LLM tooling, and applied ML. LLM eval, AI agents, fintech payments, LLM security, AIOps.",
   },
 };
 
