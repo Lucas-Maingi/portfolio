@@ -88,7 +88,7 @@ In PaySim's case it's neither dishonest nor leaked — it's that PaySim is a **s
 
 ## So I report the honest number
 
-I led the README with **PR-AUC (0.89)** instead of ROC-AUC, because for a class that's 0.116% positive, precision-recall is the metric that reflects reality. And I wrote a plain "known limitations" section stating that real-world performance will be lower. Counterintuitively, **the honest 0.89 is a stronger hiring signal than a suspicious 1.0** — it shows I know what the numbers mean.
+I led the README with **PR-AUC (0.95 for the ensemble)** instead of ROC-AUC, because for a class that's 0.116% positive, precision-recall is the metric that reflects reality — and I labelled it plainly as an upper bound on a simulator. And I wrote a "known limitations" section stating that real-world performance will be lower. Counterintuitively, **an honest PR-AUC framed with its caveats is a stronger hiring signal than a suspicious ROC-AUC of 1.0** — it shows I know what the numbers mean.
 
 ## The metric that actually scales
 

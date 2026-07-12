@@ -181,13 +181,29 @@ export default function Projects() {
       )
     },
     {
+      name: "The Watcher",
+      slug: "the-watcher",
+      category: "AI Reasoning / Security",
+      problem: "Security scanners are firehoses: one over-permissioned IAM policy copied across 40 services becomes 40+ alerts. The Watcher builds a property graph of your stack and reasons over it to surface the few architectural root causes — with reasoning traces, blast radius, and fixes. The LLM only writes prose; it can't alter a finding.",
+      tech: ["Python", "NetworkX", "FastAPI", "React", "MCP"],
+      metric: "56→6",
+      metricLabel: "Findings to root causes",
+      liveUrl: "https://github.com/Lucas-Maingi/the-watcher",
+      githubUrl: "https://github.com/Lucas-Maingi/the-watcher",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
+        </svg>
+      )
+    },
+    {
       name: "Aletheia",
       slug: "aletheia",
       category: "Full Stack + AI Engineering",
       problem: "Security teams struggle to see their own public exposure. Aletheia runs authorized OSINT workflows across pluggable connectors — breach checks, attack-surface, sanctions — then uses an LLM to synthesize findings into a cited report in seconds.",
       tech: ["Next.js", "TypeScript", "Prisma", "LLMs"],
-      metric: "17+",
-      metricLabel: "Sources Correlated",
+      metric: "29",
+      metricLabel: "OSINT Connectors",
       liveUrl: "https://www.aletheia.software",
       githubUrl: "https://github.com/Lucas-Maingi/Aletheia",
       icon: (
@@ -205,7 +221,7 @@ export default function Projects() {
       category: "Machine Learning + Data Engineering",
       problem: "Mobile money transactions are vulnerable to instant fraud. This hybrid XGBoost + Isolation Forest engine scores each transaction in real-time with SHAP explanations, flagging theft before cash-out settles.",
       tech: ["Python", "XGBoost", "FastAPI", "Docker"],
-      metric: "0.89",
+      metric: "0.95",
       metricLabel: "PR-AUC on PaySim",
       liveUrl: "https://pesaguard.streamlit.app/",
       githubUrl: "https://github.com/Lucas-Maingi/PesaGuard",

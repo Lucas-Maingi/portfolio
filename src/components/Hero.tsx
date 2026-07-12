@@ -56,7 +56,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-base sm:text-lg text-neutral-400 max-w-xl font-normal leading-relaxed">
-            I design and ship production-shaped AI agents, LLM tooling, and machine learning systems — from a WhatsApp commerce agent with real M-Pesa payments to an LLM eval/regression-gate toolkit and a drop-in LLM security gateway. Eight shipped systems, real integrations, honest metrics.
+            I design and ship production-shaped AI agents, LLM tooling, and machine learning systems — from a WhatsApp commerce agent with real M-Pesa payments to an LLM eval/regression-gate toolkit and a drop-in LLM security gateway. Nine shipped systems, real integrations, honest metrics.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">

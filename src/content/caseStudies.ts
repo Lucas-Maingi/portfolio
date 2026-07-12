@@ -95,12 +95,46 @@ Deliberately, only the business realities I can't write in code: M-Pesa producti
 `.trim(),
   },
   {
+    slug: "the-watcher",
+    name: "The Watcher",
+    tagline: "Architectural security intelligence — collapses scanner alert noise into the few root causes actually generating it.",
+    category: "AI Reasoning / Security",
+    tech: ["Python", "NetworkX", "FastAPI", "React", "MCP", "LLM reasoning"],
+    liveUrl: "https://github.com/Lucas-Maingi/the-watcher",
+    githubUrl: "https://github.com/Lucas-Maingi/the-watcher",
+    metric: "56 → 6",
+    metricLabel: "Findings to root causes",
+    body: `
+## The problem
+
+Security scanners are firehoses. A single over-permissioned IAM policy copy-pasted across 40 services produces 40+ separate findings — and every tool shows you the 40, none show you the one. That's alert fatigue: the real, expensive pain isn't a shortage of findings, it's that the handful of *architectural* root causes generating them are buried in the noise.
+
+## What I built
+
+The Watcher builds a **property graph** of a stack — repos, CI pipelines, IAM roles, buckets, security groups, and the trust relationships between them — then reasons over it to find the root causes. On the built-in demo company, **56 scanner-style findings collapse to 6 root causes**, each with a reasoning trace, a blast-radius estimate, and a fix.
+
+## The design decision that makes it work
+
+Detectors don't just flag a resource — they record **which graph node structurally causes each signal**, plus the exact traversal as a reasoning trace. Clustering then becomes trivial: signals sharing a root node are symptoms of the same disease. Critically, **the LLM only writes the prose narrative — it cannot add, remove, or re-score a single finding.** Detection stays deterministic, reproducible, and auditable; explanation gets to be human. Without an API key you get honest offline templates and everything else works identically.
+
+Blast radius is *exact* where the graph can answer it (which services, which resources) and *banded* where it can't (effort in hours/days/weeks — a precise number for a cross-team IAM migration would be fiction). That honesty about what's knowable is the whole point.
+
+## For coding agents
+
+The reasoning engine is exposed as four **MCP tools**, so a coding agent working in a file can ask \`get_context_for("services/payments/handler.py")\` and get the architectural root causes touching that service — the shared IAM template it inherits, the CI key its deploys use — not lint output.
+
+## Engineering
+
+Python backend (a \`watcher\` package: graph store, deterministic detectors, clustering engine, blast-radius, LLM/template narrative) + a React/Vite dashboard. Read-only GitHub and AWS connectors (the minimum IAM policy is documented — using \`ReadOnlyAccess\` for a tool like this would be ironic). 16 tests including one that proves every reasoning trace only references nodes that actually exist. CI runs lint + tests + a demo smoke-test on every push. The README's "honest limitations" section names exactly what it does *not* cover yet.
+`.trim(),
+  },
+  {
     slug: "pesaguard",
     name: "PesaGuard",
     tagline: "Real-time mobile-money fraud detection with explainable alerts.",
     category: "Machine Learning + Data Engineering",
     tech: ["Python", "XGBoost", "Isolation Forest", "FastAPI", "Streamlit", "Docker"],
-    metric: "0.89",
+    metric: "0.95",
     metricLabel: "PR-AUC on PaySim",
     liveUrl: "https://github.com/Lucas-Maingi/PesaGuard",
     githubUrl: "https://github.com/Lucas-Maingi/PesaGuard",
@@ -119,7 +153,7 @@ PesaGuard is a three-tier system: a **FastAPI** scoring service, a hybrid ML ens
 
 ## The engineering decisions that mattered
 
-**I refused to report the impressive-but-dishonest number.** On the PaySim dataset, tree ensembles hit a near-perfect ROC-AUC of ~1.0. That is a property of a *simulator* with cleanly separable fraud — not evidence of production quality. Reporting it would signal to any experienced reviewer either that I don't recognise data leakage or that I'm inflating. So I led with **PR-AUC (0.89)**, the right metric for a 0.116%-positive class, and wrote a "known limitations" section stating plainly that real-world numbers will be lower.
+**I refused to report the impressive-but-dishonest number.** On the PaySim dataset, tree ensembles hit a near-perfect ROC-AUC of ~1.0. That is a property of a *simulator* with cleanly separable fraud — not evidence of production quality. Reporting it would signal to any experienced reviewer either that I don't recognise data leakage or that I'm inflating. So I led with **PR-AUC — 0.95 for the final ensemble** — the right metric for a 0.116%-positive class, and wrote a "known limitations" section stating plainly that these numbers are an upper bound and real-world scores will be lower.
 
 **False-positive rate is the metric that actually scales.** At 40M transactions/day, a 1% false-positive rate means 400,000 false alerts — an alert queue no team can work. The whole model is tuned to keep FPR near 0.005% while holding high recall, because at mobile-money scale that trade-off *is* the product.
 
@@ -183,8 +217,8 @@ Dockerised serving image, GitHub Actions CI (lint + coverage + container health 
     tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "LLMs"],
     liveUrl: "https://www.aletheia.software",
     githubUrl: "https://github.com/Lucas-Maingi/Aletheia",
-    metric: "17+",
-    metricLabel: "Sources Correlated",
+    metric: "29",
+    metricLabel: "OSINT Connectors",
     body: `
 ## The problem
 
