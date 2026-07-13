@@ -308,10 +308,10 @@ export default function Projects() {
             Selected Work
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Agents, LLM tooling & applied ML — shipped and tested
+            Web apps, machine learning & LLM integrations — shipped and tested
           </h2>
           <p className="text-neutral-400 max-w-xl text-sm font-normal">
-            Production-shaped systems that solve real problems, each with a live test suite and passing CI. Grouped so the flagships lead.
+            Working software that solves real problems — each project has a test suite, passing CI, and documentation. Grouped so the flagships lead.
           </p>
         </div>
 

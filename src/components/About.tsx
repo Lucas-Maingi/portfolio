@@ -18,13 +18,13 @@ export default function About() {
 
             <div className="text-neutral-400 text-sm leading-relaxed space-y-6 font-normal">
               <p>
-                I am an AI engineer who designs, builds, and ships production-shaped agentic systems: LLM-driven agents with real tool use, evaluation and observability tooling, and the backend engineering that makes them reliable rather than just impressive in a demo. My work spans agent orchestration, LLM eval/regression gates, machine learning, and the real-world integrations (payments, messaging APIs, security scanning) that turn a prototype into something a business can actually depend on.
+                I am an AI/ML engineer and full-stack developer. I build products end to end: the machine learning models and data pipelines, the Python/FastAPI services that serve them, and the React/Next.js interfaces people actually use. Much of my recent work involves integrating large language models into real applications — with the evaluation, security scanning, and safeguards that make those features dependable rather than just impressive in a demo. I also handle the practical integrations most products need: payments, messaging, email, and third-party APIs.
               </p>
               <p>
                 My educational foundation is a hybrid of the intensive ALX Data Science bootcamp and a rigorous self-directed curriculum. Underpinning this is a strong background in mathematics and physics, which allows me to analyze algorithms from first principles and design systems that hold up under real load, not just idealized inputs.
               </p>
               <p>
-                I am actively looking for a remote AI/LLM Engineer role with an international team. I aim to contribute my experience shipping functional systems — a WhatsApp AI commerce agent with real M-Pesa payment collection, an open-source LLM eval and regression-gate toolkit, a drop-in LLM security gateway, and automated fraud-detection and churn-prediction services — to teams that value clean architecture, honest evaluation, and pragmatic engineering.
+                I am actively looking for a remote AI/ML Engineer or Full-Stack Developer role with an international team. What I bring is a track record of shipping working software: a fraud-detection service scoring transactions in real time, a multi-tenant churn-prediction SaaS, a WhatsApp commerce agent with real M-Pesa payment collection, and an open-source toolkit for testing LLM applications — each with tests, CI, documentation, and a live demo. I care about clean architecture, measured results, and building things a business can depend on.
               </p>
             </div>
           </div>

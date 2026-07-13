@@ -10,14 +10,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lucasmaingi.vercel.app"),
-  title: "Lucas Maingi | AI Engineer — Agentic Systems & LLM Applications",
+  title: "Lucas Maingi | AI/ML Engineer & Full-Stack Developer",
   description:
-    "Portfolio of Lucas Maingi, an AI Engineer building production-shaped agents, LLM tooling, and machine learning systems: WhatsApp commerce agents with real M-Pesa payments, an LLM eval/regression-gate toolkit, a drop-in LLM security gateway, and more.",
+    "Portfolio of Lucas Maingi, an AI/ML engineer and full-stack developer building complete products: machine learning services, Python/FastAPI backends, React/Next.js frontends, and LLM integrations — fraud detection, churn prediction, a WhatsApp commerce agent with M-Pesa payments, and more.",
   robots: "index, follow",
   openGraph: {
-    title: "Lucas Maingi | AI Engineer — Agentic Systems & LLM Applications",
+    title: "Lucas Maingi | AI/ML Engineer & Full-Stack Developer",
     description:
-      "AI Engineer portfolio showcasing agentic AI systems, LLM evaluation tooling, fraud detection, LLM security, and real-world fintech/automation integrations.",
+      "AI/ML engineer and full-stack developer: machine learning services, web applications, and LLM integrations with real payments, messaging, and security features.",
     type: "website",
     locale: "en_US",
     url: "https://lucasmaingi.vercel.app",
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lucas Maingi | AI Engineer — Agentic Systems & LLM Applications",
+    title: "Lucas Maingi | AI/ML Engineer & Full-Stack Developer",
     description:
-      "AI Engineer building agentic systems, LLM tooling, and applied ML. LLM eval, AI agents, fintech payments, LLM security, AIOps.",
+      "AI/ML engineer and full-stack developer. Machine learning, web applications, and LLM integrations — fraud detection, churn prediction, payments, and messaging.",
   },
 };
 
