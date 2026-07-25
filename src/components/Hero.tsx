@@ -56,7 +56,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-base sm:text-lg text-neutral-400 max-w-xl font-normal leading-relaxed">
-            I build complete products: web applications, the APIs behind them, and the machine learning and LLM features that make them useful. Recent work includes a real-time fraud detection service, a churn-prediction SaaS with a live dashboard, and a WhatsApp commerce agent that collects real M-Pesa payments. Nine shipped projects, every one with tests, CI, and a working demo.
+            I build complete products: web applications, the APIs behind them, and the machine learning and LLM features that make them useful. Recent work spans a computer-vision KYC pipeline trained entirely on synthetic documents, a real-time fraud detection service fed by my own live data platform, and a WhatsApp commerce agent that collects real M-Pesa payments. Thirteen shipped projects across deep learning, data engineering, and agentic AI — tested, documented, and demoed.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">

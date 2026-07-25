@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://lucasmaingi.vercel.app"),
   title: "Lucas Maingi | AI/ML Engineer & Full-Stack Developer",
   description:
-    "Portfolio of Lucas Maingi, an AI/ML engineer and full-stack developer building complete products: machine learning services, Python/FastAPI backends, React/Next.js frontends, and LLM integrations — fraud detection, churn prediction, a WhatsApp commerce agent with M-Pesa payments, and more.",
+    "Portfolio of Lucas Maingi, an AI/ML engineer and full-stack developer building complete products: machine learning and computer-vision services, data pipelines, Python/FastAPI backends, React/Next.js frontends, and LLM integrations — KYC document verification, fraud detection, churn prediction, a WhatsApp commerce agent with M-Pesa payments, and more.",
   robots: "index, follow",
   openGraph: {
     title: "Lucas Maingi | AI/ML Engineer & Full-Stack Developer",

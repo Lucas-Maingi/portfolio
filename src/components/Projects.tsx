@@ -147,6 +147,21 @@ function ProjectCard({ project }: { project: Project }) {
 export default function Projects() {
   const projects: Project[] = [
     {
+      name: "Seer",
+      slug: "seer",
+      category: "Deep Learning / Computer Vision",
+      problem: "KYC needs identity documents to train on — and real ones are legally radioactive. Seer generates its own synthetic specimens with per-pixel ground truth, then trains the full pipeline on them: DSNT corner localization → homography rectification → CRNN+CTC OCR with MRZ check digits → calibrated ArcFace face match → forensic tamper detection. INT8 ONNX, CPU-only serving.",
+      tech: ["PyTorch", "ONNX", "INT8 Quant", "FastAPI", "Next.js"],
+      metric: "0",
+      metricLabel: "Real identity documents used",
+      githubUrl: "https://github.com/Lucas-Maingi/seer",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" />
+        </svg>
+      )
+    },
+    {
       name: "Argus",
       slug: "argus",
       category: "AI Tooling / Open Source",
@@ -294,9 +309,56 @@ export default function Projects() {
         </svg>
       )
     },
+    {
+      name: "qec-bench",
+      slug: "qec-bench",
+      category: "ML Research Engineering",
+      problem: "The landmark neural decoders for quantum error correction are closed source. qec-bench is a reproducible open benchmark running classical MWPM baselines and a lightweight neural decoder side by side under standardized Stim noise — reporting logical error rate with error bars, µs-scale CPU latency, and where the neural decoder loses.",
+      tech: ["PyTorch", "Stim", "PyMatching", "Python", "CI"],
+      metric: "µs/shot",
+      metricLabel: "CPU decode latency",
+      liveUrl: "https://lucas-maingi.github.io/qec-bench/",
+      githubUrl: "https://github.com/Lucas-Maingi/qec-bench",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z" />
+        </svg>
+      )
+    },
+    {
+      name: "Mizani",
+      slug: "mizani",
+      category: "Data Engineering",
+      problem: "Four genuinely messy public sources — a JSON API, a headerless CSV with duplicates and three date formats, an HTML scrape, and a human-formatted Excel workbook — flow through a bronze/silver/gold medallion pipeline into a tested star schema. Bad rows are quarantined with reasons, never silently dropped. Runs live weekly and feeds PesaGuard.",
+      tech: ["Dagster", "dbt", "DuckDB", "Pandera", "GitHub Actions"],
+      metric: "4→1",
+      metricLabel: "Messy sources to star schema",
+      liveUrl: "https://lucas-maingi.github.io/mizani/",
+      githubUrl: "https://github.com/Lucas-Maingi/mizani",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+        </svg>
+      )
+    },
+    {
+      name: "Botbase",
+      slug: "botbase",
+      category: "Full Stack / AI SaaS",
+      problem: "A multi-tenant 'train a chatbot on your website' SaaS: crawl → chunk → embed → pgvector, streamed RAG answers over SSE, embedded anywhere with one script tag. Tenant isolation enforced in four independent layers (RLS, SQL-scoped vector search, row tagging, session keying), with an SSRF-guarded crawler.",
+      tech: ["Next.js", "Supabase", "pgvector", "TypeScript", "Gemini/OpenAI"],
+      metric: "1 tag",
+      metricLabel: "Script-tag embed, tenant-isolated",
+      githubUrl: "https://github.com/Lucas-Maingi/botbase",
+      icon: (
+        <svg className="w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+        </svg>
+      )
+    },
   ];
 
-  const flagshipSlugs = ["argus", "hermes", "the-watcher"];
+  const flagshipSlugs = ["seer", "argus", "hermes"];
   const flagship = projects.filter((p) => flagshipSlugs.includes(p.slug));
   const more = projects.filter((p) => !flagshipSlugs.includes(p.slug));
 
@@ -311,7 +373,7 @@ export default function Projects() {
             Web apps, machine learning & LLM integrations — shipped and tested
           </h2>
           <p className="text-neutral-400 max-w-xl text-sm font-normal">
-            Working software that solves real problems — each project has a test suite, passing CI, and documentation. Grouped so the flagships lead.
+            Working software that solves real problems — built with test suites, CI pipelines, and documentation throughout. Grouped so the flagships lead.
           </p>
         </div>
 

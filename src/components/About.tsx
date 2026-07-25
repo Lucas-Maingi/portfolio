@@ -18,13 +18,13 @@ export default function About() {
 
             <div className="text-neutral-400 text-sm leading-relaxed space-y-6 font-normal">
               <p>
-                I am an AI/ML engineer and full-stack developer. I build products end to end: the machine learning models and data pipelines, the Python/FastAPI services that serve them, and the React/Next.js interfaces people actually use. Much of my recent work involves integrating large language models into real applications — with the evaluation, security scanning, and safeguards that make those features dependable rather than just impressive in a demo. I also handle the practical integrations most products need: payments, messaging, email, and third-party APIs.
+                I am an AI/ML engineer and full-stack developer. I build products end to end: the machine learning models — from gradient-boosted classifiers to deep computer-vision pipelines trained on synthetic data — the data platforms and Python/FastAPI services that feed and serve them, and the React/Next.js interfaces people actually use. Much of my recent work involves integrating large language models into real applications — with the evaluation, security scanning, and safeguards that make those features dependable rather than just impressive in a demo. I also handle the practical integrations most products need: payments, messaging, email, and third-party APIs.
               </p>
               <p>
                 My educational foundation is a hybrid of the intensive ALX Data Science bootcamp and a rigorous self-directed curriculum. Underpinning this is a strong background in mathematics and physics, which allows me to analyze algorithms from first principles and design systems that hold up under real load, not just idealized inputs.
               </p>
               <p>
-                I am actively looking for a remote AI/ML Engineer or Full-Stack Developer role with an international team. What I bring is a track record of shipping working software: a fraud-detection service scoring transactions in real time, a multi-tenant churn-prediction SaaS, a WhatsApp commerce agent with real M-Pesa payment collection, and an open-source toolkit for testing LLM applications — each with tests, CI, documentation, and a live demo. I care about clean architecture, measured results, and building things a business can depend on.
+                I am actively looking for a remote AI/ML Engineer or Full-Stack Developer role with an international team. What I bring is a track record of shipping working software: an end-to-end KYC computer-vision pipeline, a fraud-detection service scoring transactions in real time, a live weekly data platform that feeds it, a WhatsApp commerce agent with real M-Pesa payment collection, and an open-source toolkit for testing LLM applications — with tests, CI, documentation, and live demos throughout. I care about clean architecture, measured results, and building things a business can depend on.
               </p>
             </div>
           </div>

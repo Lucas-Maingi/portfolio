@@ -14,6 +14,39 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "seer",
+    name: "Seer",
+    tagline: "End-to-end KYC document verification — every model trained on synthetic documents Seer generates itself.",
+    category: "Deep Learning / Computer Vision",
+    tech: ["Python", "PyTorch", "ONNX Runtime", "INT8 Quantization", "FastAPI", "Next.js"],
+    metric: "0",
+    metricLabel: "Real identity documents used",
+    githubUrl: "https://github.com/Lucas-Maingi/seer",
+    body: `
+## The problem
+
+KYC — verifying that a person is who their ID says they are — is trust infrastructure for every fintech. But the training data problem is brutal: real identity documents are legally radioactive (Kenya Data Protection Act 2019, GDPR). Most "document detection" demos dodge this by scraping images and drawing a bounding box around an ID. That's neither legal nor close to what a real KYC system does.
+
+## What I built
+
+Seer is a production-shaped identity-verification service: photograph a Kenyan national ID or passport and it localizes the document, rectifies it, reads its fields, verifies the holder's face against a live selfie, and scores the image for tampering — all on CPU, inside a measured latency budget.
+
+The foundational decision: **every model is trained on synthetic specimen documents Seer generates itself.** A procedural renderer composes fictional personas onto specimen layouts with per-pixel ground truth (corners, field polygons, text, tamper masks) and domain randomization. Every generated document carries a baked-in SPECIMEN watermark and deliberately omits real security features — it's training data, not forgery. This mirrors how commercial KYC vendors actually operate, because the synthetic data pipeline *is* the product.
+
+## The deliberately harder choice at every stage
+
+- **Localization:** not a bounding box — **4-corner keypoint regression** with differentiable soft-argmax (DSNT) heatmaps → sub-pixel corners → homography rectification to a canonical crop.
+- **OCR:** not Tesseract — a **custom CRNN + CTC** recognizer trained on Seer's own synthetic field crops, plus ICAO 9303 MRZ parsing with check-digit validation.
+- **Face verification:** **ArcFace embeddings** with a cosine threshold calibrated to a target false-match rate on a public benchmark — not "looks similar."
+- **Tamper detection:** forensic fusion — Error Level Analysis + noise-residual statistics + a CNN trained on synthetically forged documents.
+- **Deployment:** ONNX export → **INT8 static quantization** with a calibration set, and a benchmark harness reporting p50/p95 CPU latency per stage.
+
+## Engineering
+
+Training and serving are split by design: the models are small (3M / 8M / <1M parameters), so a free Colab T4 trains all three in an afternoon and a modest CPU serves them. Public benchmarks (MIDV-2020 for localization, LFW for face verification) quantify the sim-to-real gap honestly. Unit tests cover the parts that lie quietly when wrong — checksums, geometry, codecs. FastAPI service + Next.js front end.
+`.trim(),
+  },
+  {
     slug: "argus",
     name: "Argus",
     tagline: "Eval, tracing & regression-gate toolkit for LLM applications.",
@@ -323,6 +356,97 @@ LLM security / guardrails is one of the fastest-growing concerns in production A
 ## Engineering
 
 A FastAPI proxy with layered scanners, SQLite audit + cache store, Docker Compose deployment, a pytest suite, and green CI. Built to be understood and trusted, which for a security tool is the whole point.
+`.trim(),
+  },
+  {
+    slug: "qec-bench",
+    name: "qec-bench",
+    tagline: "A reproducible benchmark for surface-code quantum error correction decoders, plus a CPU-fast neural decoder.",
+    category: "ML Research Engineering",
+    tech: ["Python", "PyTorch", "Stim", "PyMatching", "Fusion Blossom", "GitHub Actions"],
+    metric: "µs/shot",
+    metricLabel: "CPU decode latency",
+    liveUrl: "https://lucas-maingi.github.io/qec-bench/",
+    githubUrl: "https://github.com/Lucas-Maingi/qec-bench",
+    body: `
+## The problem
+
+Quantum error correction is where quantum computing gets decided, and decoding is its classical-ML bottleneck. The standard MWPM baselines (PyMatching, Fusion Blossom) are open; the landmark neural decoders (DeepMind's AlphaQubit line) are closed source; NVIDIA's open release is GPU-oriented. What's missing is a rigorous, **reproducible, open benchmark** running the available decoders side by side under standardized noise — and a small, well-documented neural decoder practical to run on a CPU.
+
+## What I built
+
+qec-bench is that benchmark, built as an ML engineering project end to end: versioned data generation from committed configs, traceable experiments, one-command reproduction, tests, CI, and honest reporting.
+
+For every decoder × code distance × physical error rate cell it measures **logical error rate** (with binomial standard errors, from raw counts) and **decode latency** (µs/shot on a single CPU core), against standardized noise models — circuit-level depolarizing, phenomenological, or code-capacity — generated with Stim. Training and benchmark data come from different seeds; models are never scored on shots they trained on.
+
+## The neural decoder
+
+A deliberately small per-distance MLP (~150k parameters at d=7) trained on Stim-sampled syndromes, with checkpointed/resumable training, JSONL experiment tracking, and single-digit-microsecond CPU inference. **It beats the MWPM baselines in some near-threshold cells and loses clearly at low error rates — both results are reported.** A benchmark you can't trust to report losses isn't a benchmark.
+
+## Engineering
+
+An installable package with a CLI (\`qecbench generate / benchmark / report\`), versioned dataset and training configs as the source of truth, a pytest suite and ruff lint on every push, committed results with full provenance, and a static results dashboard (no build step) published to GitHub Pages.
+`.trim(),
+  },
+  {
+    slug: "mizani",
+    name: "Mizani",
+    tagline: "East African economic & mobile-money data platform — medallion ETL with quarantine-first data quality, running live weekly.",
+    category: "Data Engineering",
+    tech: ["Python", "Dagster", "dbt", "DuckDB", "Pandera", "GitHub Actions"],
+    metric: "4 → 1",
+    metricLabel: "Messy sources to star schema",
+    liveUrl: "https://lucas-maingi.github.io/mizani/",
+    githubUrl: "https://github.com/Lucas-Maingi/mizani",
+    body: `
+## The problem
+
+Real-world data engineering is not clean CSVs. Mizani ingests four genuinely messy public sources: a JSON API with nulls and pagination (World Bank), a **headerless** CSV with 485 duplicate rows, three date formats and labels like \`CAN $\` (Central Bank of Kenya forex), an HTML table that offers no export (CBK mobile payments), and a human-formatted Excel workbook with title rows, padding columns and ~100 wide quarter columns (GSMA mobile money).
+
+## What I built
+
+A bronze/silver/gold **medallion pipeline** — 21 Dagster assets orchestrating ingestion into DuckDB, Pandera validation, and a dbt star schema with 32 data tests and full lineage.
+
+- **Bronze:** rows land exactly as received, every column VARCHAR, with source, timestamp, and a sha256 row hash. Idempotent by hash anti-join — re-running inserts zero duplicates. A failing source degrades loudly into an ingestion log and the run continues (this path has fired for real: CBK dropped a TLS connection mid-run).
+- **Silver:** rebuilt deterministically from bronze; declarative Pandera schemas per source. Rows failing any check land in \`silver.quarantine\` with their raw payload and a human-readable reason — **nothing is silently dropped.** Rows sharing a business key with different values are both quarantined as conflicts; the pipeline never guesses which revision is true.
+- **Gold:** dbt star schema, tested and documented, queried at build time into a published dashboard, data-quality report, and a machine-readable JSON feed.
+
+## Honesty as a feature
+
+CBK's downloadable FX history currently ends in early 2024 (current rates hide behind a nonce-protected AJAX table), so every published FX value carries an explicit \`as_of\` date rather than pretending to be current. Every number in the README is measured from an actual pipeline run, not estimated.
+
+## It feeds a real consumer
+
+The pipeline runs on a weekly GitHub Actions schedule against the live sources; its \`latest.json\` feed is **consumed live by PesaGuard**, my fraud-detection system — so this is a data platform with an actual downstream dependency, not a portfolio diorama.
+`.trim(),
+  },
+  {
+    slug: "botbase",
+    name: "Botbase",
+    tagline: "Multi-tenant RAG chatbot SaaS — train a bot on your website, embed it with one script tag.",
+    category: "Full Stack / AI SaaS",
+    tech: ["Next.js", "TypeScript", "Supabase", "pgvector", "Gemini / OpenAI", "Tailwind CSS"],
+    metric: "1 tag",
+    metricLabel: "Script-tag embed, isolated per tenant",
+    githubUrl: "https://github.com/Lucas-Maingi/botbase",
+    body: `
+## The problem
+
+"Chat with your website" is easy to demo and hard to productize. The hard parts are multi-tenancy (tenant A must never see tenant B's data — or their chats), safe crawling of arbitrary URLs, and streaming answers grounded in the right tenant's content only.
+
+## What I built
+
+Botbase is a complete SaaS: businesses sign up, train a chatbot on their website content or pasted documents, customize its look with live preview, and embed it on their own site with a single \`<script>\` tag. Next.js 14 App Router, Supabase (Postgres + pgvector + Auth), and a swappable LLM layer (Gemini by default, OpenAI by config — both producing 768-dim embeddings so the provider can switch without re-migrating).
+
+The ingestion pipeline: a cheerio BFS crawler → ~1000-char chunks with 200 overlap → embeddings → pgvector with an HNSW index. The public chat endpoint streams over SSE, grounding every answer with a vector search scoped to one chatbot.
+
+## Tenant isolation is the product
+
+Four layers, each independently verifiable: **RLS policies** scoping every dashboard query to the signed-in owner's organization; a \`match_embeddings()\` SQL function that **requires an explicit chatbot_id** and is only executable by the server role — there is no cross-tenant search path; every row tagged with both chatbot and organization IDs; and history lookups always keyed on chatbot **and** session, so a guessed session ID can't surface another tenant's chats.
+
+## Security engineering
+
+The crawler carries an **SSRF guard** — refusing localhost, private, link-local and metadata IPs, re-checking after redirects. Retrieved context is fenced against prompt injection, per-IP rate limiting protects the public endpoint, per-tenant monthly usage caps bound spend, and crawls are bounded by page count, depth, timeout and size. The widget renders in a cross-origin iframe so host-page CSS/JS can't break or read the chat. The README names the remaining gaps (DNS-rebinding hardening, distributed rate limiting) as future work rather than pretending they're solved.
 `.trim(),
   },
 ];
