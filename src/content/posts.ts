@@ -841,7 +841,7 @@ Every AI model uses the same 5-line training loop: forward pass, loss, zero_grad
     title: "Building a CNN that reads handwritten digits: From nn.Linear to nn.Conv2d",
     date: "2026-08-29",
     readingTime: "7 min read",
-    excerpt: "A standard linear layer needs 3 million weights to process a single image. A convolutional layer needs 9. Here is how I built a CNN from scratch in PyTorch and trained it on 60,000 real MNIST images.",
+    excerpt: "For a 1000x1000 color image, a linear layer would need 3 billion parameters. A convolutional layer with a 3x3 kernel learns as few as 9 weights per filter—and reuses them across the entire image. Here is how I built a CNN in PyTorch and trained it on 60,000 real MNIST images.",
     body: `
 ## TL;DR
 Standard linear layers destroy spatial relationships in images and require billions of parameters. Convolutional Neural Networks (CNNs) solve this by sliding small learnable filters across the image, extracting edges and shapes with orders of magnitude fewer weights. I built a CNN from scratch in PyTorch and trained it on real MNIST handwriting data—the loss dropped to 0.05 in 5 epochs.
@@ -870,7 +870,7 @@ self.classifier = nn.Sequential(
 \`\`\`
 
 Key architectural decisions:
-*   **$\texttt{nn.Conv2d}$:** Slides a 3x3 "magnifying glass" (kernel) across the image. Instead of 3 million weights, it learns 9 weights per filter and reuses them across the entire image.
+*   **$\texttt{nn.Conv2d}$:** Slides a 3x3 kernel across the image. Each individual 3x3 kernel has only 9 learnable weights, and those weights are reused at every position across the image. The total parameter count depends on how many input channels and output filters you configure (in my case: 1 input channel x 8 filters x 3x3 kernel + 8 biases = 80 parameters—still dramatically fewer than a linear layer on the same input).
 *   **$\texttt{nn.MaxPool2d}$:** Shrinks the image by keeping only the strongest signal in each 2x2 grid, halving the spatial dimensions.
 *   **$\texttt{nn.Flatten}$:** Bridges the 2D convolutional world to the 1D linear world for final classification.
 
@@ -913,16 +913,16 @@ The hardest bug in CNN architecture is calculating the exact $\texttt{in\_featur
 ## Share this
 
 **LinkedIn:**
-A standard nn.Linear layer needs 3 MILLION weights to process a single color image. A Convolutional layer (nn.Conv2d) needs 9.
+For a 1000x1000 color image, connecting every pixel to a single hidden layer via nn.Linear would require billions of parameters. The GPU crashes before training even starts.
 
-It works by sliding a tiny 3x3 filter across the image, learning to detect edges and shapes with orders of magnitude fewer parameters.
+nn.Conv2d solves this by sliding a tiny learnable filter (e.g., 3x3) across the image and reusing those same weights at every position. In my experiment, my first Conv layer had 80 total parameters. A linear layer on the same 28x28 input would need over 12,000 per neuron.
 
-I built a CNN from scratch in PyTorch and trained it on 60,000 real MNIST handwriting images. The loss dropped from 0.16 to 0.05 in 5 epochs. The network learned to see edges, curves, and loops—all from raw pixel data.
+I built a CNN from scratch in PyTorch and trained it on 60,000 real MNIST handwriting images. The loss dropped from 0.16 to 0.05 in 5 epochs. The network learned to detect edges, curves, and loops—all from raw pixel data.
 
-On synthetic random noise, the same architecture plateaued at loss 2.30 (mathematical proof of random guessing). On real patterns, it converged to 0.05. That gap is the entire value proposition of Convolutional Neural Networks.
+On synthetic random noise, the same architecture plateaued at loss 2.30 (the mathematical signature of random guessing across 10 classes). On real patterns, it converged to 0.05. That gap is the value proposition of Convolutional Neural Networks.
 
 **X/Twitter:**
-nn.Linear needs 3M weights per image. nn.Conv2d needs 9. I trained a CNN on 60k real MNIST images—loss dropped to 0.05 in 5 epochs. Same architecture on random noise plateaued at 2.30. When patterns exist, convolutions find them.
+For my 28x28 MNIST images, my Conv2d layer had 80 params. An equivalent Linear layer would need 12,000+ per neuron. Trained a CNN on 60k real images—loss dropped to 0.05. Same architecture on noise plateaued at 2.30. Convolutions find patterns. Linear layers drown in parameters.
 `.trim(),
   },
   {
